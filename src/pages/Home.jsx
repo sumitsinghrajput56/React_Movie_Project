@@ -23,8 +23,27 @@ function Home() {
     loadPopularMovies();
   }, []);
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
+    if(!searchQuery.trim()) return
+
+    if(loading) return 
+
+    setLoading(true)
+    try{
+        const searchResult= await searchMovies(searchQuery);
+        setMovies(searchResult)
+        setError(null)
+
+    }
+    catch(err)
+    {
+        setError("Failed to search Movies...");
+    }
+    finally
+    {
+        setLoading(false);
+    }
     setSearchQuery("");
   };
   return (
@@ -42,6 +61,7 @@ function Home() {
             search
           </button>
         </form>
+        {error && <div className="error-message">{error}</div>}
         {loading ? (
           <div className="loading">Loading...</div>
         ) : (
