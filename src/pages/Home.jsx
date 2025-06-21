@@ -9,7 +9,9 @@ function Home() {
     { id: 3, title: "Karan Arjun", release_date: 2022 },
   ];
 
-  const handleSearch=()=>{
+  const handleSearch=(e)=>{
+    e.preventDefault();
+    setSearchQuery("");
 
   }
   return (
